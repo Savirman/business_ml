@@ -1,0 +1,71 @@
+version: '3.7'
+
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    hostname: rabbitmq
+    restart: always
+    ports:
+      - 5672:5672
+      - 15672:15672
+
+  features:
+    build:
+      context: ./features
+    container_name: features
+    restart: always
+    depends_on:
+      - rabbitmq
+    environment:
+      - RABBITMQ_HOST=rabbitmq
+    networks:
+      - microservice_network
+
+  model:
+    build:
+      context: ./model
+    container_name: model
+    restart: always
+    depends_on:
+      - rabbitmq
+      - features
+    environment:
+      - RABBITMQ_HOST=rabbitmq
+    networks:
+      - microservice_network
+
+  metric:
+    build:
+      context: ./metric
+    container_name: metric
+    restart: always
+    depends_on:
+      - rabbitmq
+      - features
+      - model
+    volumes:
+      - /home/dima/microservice_architecture/logs/:/usr/src/app/logs/
+    environment:
+      - RABBITMQ_HOST=rabbitmq
+    networks:
+      - microservice_network
+
+  plot:
+    build:
+      context: ./plot
+    container_name: plot
+    restart: always
+    depends_on:
+      - rabbitmq
+      - metric
+    volumes:
+      - /home/dima/microservice_architecture/logs/:/usr/src/app/logs/
+    environment:
+      - LOGS_PATH=/usr/src/app/logs/metric_log.csv
+    networks:
+      - microservice_network
+
+networks:
+  microservice_network:
+    driver: bridge
