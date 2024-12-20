@@ -4,8 +4,8 @@ import csv
 import os
 
 # Убедимся, что файл metric_log.csv существует и содержит заголовки
-log_file = '/home/dima/microservice_architecture/logs/metric_log.csv'
-os.makedirs('/home/dima/microservice_architecture/logs', exist_ok=True)  # Создаём папку, если её нет
+log_file = './logs/metric_log.csv'
+os.makedirs('./logs', exist_ok=True)  # Создаём папку, если её нет
 
 # Проверяем, существует ли файл, если нет — создаём с заголовками
 if not os.path.exists(log_file) or os.stat(log_file).st_size == 0:
@@ -18,7 +18,7 @@ messages = {}
 
 try:
     # Создаём подключение к серверу RabbitMQ
-    connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost'))
+    connection = pika.BlockingConnection(pika.ConnectionParameters(host='rabbitmq'))
     channel = connection.channel()
 
     # Объявляем очереди

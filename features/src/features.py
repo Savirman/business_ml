@@ -26,7 +26,7 @@ while True:
         }
  
         # Создаём подключение по адресу rabbitmq:
-        connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
+        connection = pika.BlockingConnection(pika.ConnectionParameters('rabbitmq'))
         channel = connection.channel()
  
         # Создаём очередь y_true

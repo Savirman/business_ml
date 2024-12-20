@@ -14,7 +14,7 @@ except Exception as e:
 
 try:
     # Создаём подключение по адресу RabbitMQ
-    connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost'))
+    connection = pika.BlockingConnection(pika.ConnectionParameters(host='rabbitmq'))
     channel = connection.channel()
 
     # Объявляем очереди

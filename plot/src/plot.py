@@ -4,8 +4,8 @@ import time
 import os
 
 # Путь к файлу логов и к файлу с изображением
-log_file = '/home/dima/microservice_architecture/logs/metric_log.csv'
-output_image = '/home/dima/microservice_architecture/logs/error_distribution.png'
+log_file = './logs/metric_log.csv'
+output_image = './logs/error_distribution.png'
 
 # Создаём папку logs, если её нет
 os.makedirs('./logs', exist_ok=True)
